@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MMDHelpers.CSharp", "MMDHelpers.CSharp\MMDHelpers.CSharp.csproj", "{3C84501E-A24D-48C8-BB45-97409A58AD56}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MMDHelpers.CSharp.LocalData", "MMDHelpers.CSharp.LocalData\MMDHelpers.CSharp.LocalData.csproj", "{741A4FEB-151C-4769-8894-6D126F3670D6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MMDHelpers.CSharp.LocalData", "MMDHelpers.CSharp.LocalData\MMDHelpers.CSharp.LocalData.csproj", "{741A4FEB-151C-4769-8894-6D126F3670D6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MMDHelpers.CSharp.LDAP", "MMDHelpers.CSharp.LDAP\MMDHelpers.CSharp.LDAP.csproj", "{E4516F6E-13BD-4FF7-96A6-6B1A34A3EAF8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{741A4FEB-151C-4769-8894-6D126F3670D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{741A4FEB-151C-4769-8894-6D126F3670D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{741A4FEB-151C-4769-8894-6D126F3670D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4516F6E-13BD-4FF7-96A6-6B1A34A3EAF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4516F6E-13BD-4FF7-96A6-6B1A34A3EAF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4516F6E-13BD-4FF7-96A6-6B1A34A3EAF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4516F6E-13BD-4FF7-96A6-6B1A34A3EAF8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
