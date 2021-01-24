@@ -5,6 +5,7 @@
     <AssemblyName>MMDHelpers.CSharp</AssemblyName>
     <RootNamespace>MMDHelpers.CSharp</RootNamespace>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>1.0.2</Version>
   </PropertyGroup>
 
 </Project>
