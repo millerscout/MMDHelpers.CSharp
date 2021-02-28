@@ -15,6 +15,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MMDHelpers.CSharp.Performan
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MMDHelpers.CSharp.Performance.GrpcClient", "MMDHelpers.CSharp.Performance.GrpcClient\MMDHelpers.CSharp.Performance.GrpcClient.csproj", "{E1BDE947-D2AF-44ED-A1E9-9DEBF81A705E}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Benchmark", "Benchmark\Benchmark.csproj", "{8FC02456-B694-49F8-9545-76374DB22BB2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MMDHelpers.Tests", "MMDHelpers.Tests\MMDHelpers.Tests.csproj", "{3BF6A5A7-1790-48A3-AC98-B08C53DE5CBA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +49,14 @@ Global
 		{E1BDE947-D2AF-44ED-A1E9-9DEBF81A705E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E1BDE947-D2AF-44ED-A1E9-9DEBF81A705E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E1BDE947-D2AF-44ED-A1E9-9DEBF81A705E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FC02456-B694-49F8-9545-76374DB22BB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FC02456-B694-49F8-9545-76374DB22BB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FC02456-B694-49F8-9545-76374DB22BB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FC02456-B694-49F8-9545-76374DB22BB2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3BF6A5A7-1790-48A3-AC98-B08C53DE5CBA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BF6A5A7-1790-48A3-AC98-B08C53DE5CBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BF6A5A7-1790-48A3-AC98-B08C53DE5CBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3BF6A5A7-1790-48A3-AC98-B08C53DE5CBA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

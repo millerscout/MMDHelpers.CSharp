@@ -22,6 +22,30 @@ namespace MMDHelpers.CSharp.Extensions
 
             }
         }
+
+        /// <summary>
+        /// High Performance ends Case-Sensitive
+        /// </summary>
+        /// <param name="Text"></param>
+        /// <param name="pattern"></param>
+        /// <returns></returns>
+        public static bool EndsWithCaseSensitive(this string Text, string pattern)
+        {
+            var y = pattern.Length - 1;
+            if (Text.Length == 0 || pattern.Length == 0) return false;
+
+            for (int i = Text.Length - 1; i >= Text.Length - pattern.Length - 1; i--)
+            {
+                if (Text[i] != pattern[y])
+                {
+                    return false;
+                }
+                y--;
+                if (y == -1) return true;
+            }
+
+            return false;
+        }
         /// <summary>
         /// Helper to transform an IEnumerable to Datatable, Useful to Bulk insert 
         /// </summary>

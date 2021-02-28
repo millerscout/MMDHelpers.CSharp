@@ -75,3 +75,35 @@ there i'm collecting Articles, tools to those scenarios.
     Ruler.Show(true);
     Ruler.LogToFile();
 ```
+
+## MMDHelpers.CSharp.Performance.Grpc
+
+I've written this code to experiment how Grpc works, 
+
+
+```
+	//Configuring on DependencyInjection:
+	public void ConfigureServices(IServiceCollection services)
+            {
+                services.AddGrpc();
+            }
+            public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+            {
+				(...)
+                app.UseEndpoints(endpoints =>
+                {
+                    endpoints.MapGrpcService<LogService>();
+                });
+	}
+	
+	//If you're not using Kestrel, i've implemented a simple one,  this should be enough to test.
+    _ = Task.Run(()=>new MMDHelpers.CSharp.Performance.grpc.LocalKestrelServer().Run());
+
+```
+
+## MMDHelpers.CSharp.Performance.GrpcClient
+
+simple console that sends instructions to server, it'll 
+start, stop measurement, get log and write to file.
+
+

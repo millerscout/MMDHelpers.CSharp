@@ -28,10 +28,11 @@ namespace client
                 {
                     await foreach (var message in call.ResponseStream.ReadAllAsync())
                     {
-                        Console.WriteLine(message);
+                        Console.WriteLine(message.Reason);
                     }
                 });
 
+                await call.RequestStream.WriteAsync(new CommandRequest() { Command = 1, State = false });
                 while (true)
                 {
                     var result = Console.ReadKey(intercept: true);
@@ -43,25 +44,26 @@ namespace client
                     var command = Console.ReadLine();
                     if (command.Length > 0)
                     {
+                        var param = Convert.ToBoolean(command.Length == 2 ? command[1] - '0' : 0);
                         if (command[0] - '0' == 0)
                         {
-                            Console.WriteLine("0 = help\n1 = StartMeasure\n2 = StopMeasurement\n3 = Collect Data\n4 = LogtoFile");
+                            Console.WriteLine("0[0-1] = help\n1 = StartMeasure(ignorePastGCCollections)\n2 = StopMeasurement\n3[0-1] = Collect Data(ignorePastGCCollections)\n4 = LogtoFile");
                         }
                         if (command[0] - '0' == 1)
                         {
-                            await call.RequestStream.WriteAsync(new CommandRequest() { Command = 1 });
+                            await call.RequestStream.WriteAsync(new CommandRequest() { Command = 1, State = param });
                         }
                         if (command[0] - '0' == 2)
                         {
-                            await call.RequestStream.WriteAsync(new CommandRequest() { Command = 2 });
+                            await call.RequestStream.WriteAsync(new CommandRequest() { Command = 2, State = param });
                         }
                         if (command[0] - '0' == 3)
                         {
-                            await call.RequestStream.WriteAsync(new CommandRequest() { Command = 3 });
+                            await call.RequestStream.WriteAsync(new CommandRequest() { Command = 3, State = param });
                         }
                         if (command[0] - '0' == 3)
                         {
-                            await call.RequestStream.WriteAsync(new CommandRequest() { Command = 4 });
+                            await call.RequestStream.WriteAsync(new CommandRequest() { Command = 4, State = param });
                         }
                     }
 

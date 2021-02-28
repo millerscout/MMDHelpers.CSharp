@@ -26,19 +26,17 @@ namespace MMDHelpers.CSharp.Performance
 
             while (await requestStream.MoveNext())
             {
-
                 var command = requestStream.Current.Command;
                 var response = "";
                 if (command > 0)
                 {
                     if (command == 0)
                     {
-
-                        response = "0 = help\n1 = StartMeasure\n2 = StopMeasurement\n3 = Collect Data\n4 = LogToFile";
+                        response = "0[0-1] = help\n1 = StartMeasure(ignorePastGCCollections)\n2 = StopMeasurement\n3[0-1] = Collect Data(ignorePastGCCollections)\n4 = LogtoFile";
                     }
                     if (command == 1)
                     {
-                        Ruler.StartMeasuring(true);
+                        Ruler.StartMeasuring(requestStream.Current.State);
                     }
                     if (command == 2)
                     {
@@ -46,7 +44,7 @@ namespace MMDHelpers.CSharp.Performance
                     }
                     if (command == 3)
                     {
-                        Ruler.Show();
+                        response = Ruler.Show(requestStream.Current.State);
                     }
                     if (command == 4)
                     {

@@ -9,6 +9,7 @@ service Sender {
 
 message CommandRequest {
 	int32 command = 1;
+	bool state = 2;
 }
 
 message CommandResult {

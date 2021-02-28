@@ -3,12 +3,16 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Google.Protobuf" Version="3.15.3" />
     <PackageReference Include="Grpc.AspNetCore" Version="2.35.0" />
-    <PackageReference Include="MMDHelpers.CSharp.PerformanceChecks" Version="1.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MMDHelpers.CSharp.PerformanceChecks\MMDHelpers.CSharp.PerformanceChecks.csproj" />
   </ItemGroup>
 
   <ItemGroup>
