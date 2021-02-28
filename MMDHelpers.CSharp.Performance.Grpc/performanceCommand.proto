@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package performanceCommand;
+
+
+service Sender {
+  rpc PerformanceCentral (stream CommandRequest) returns (stream CommandResult);
+}
+
+message CommandRequest {
+	int32 command = 1;
+}
+
+message CommandResult {
+  string reason = 1;
+}
