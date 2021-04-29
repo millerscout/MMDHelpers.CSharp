@@ -10,11 +10,11 @@ namespace MMDHelpers.CSharp.LocalData
 {
     public class DataService
     {
-        private static string connectionstring;
+        private  string connectionstring;
 
-        public static string DbLocation { get; private set; }
+        public string DbLocation { get; private set; }
 
-        public static void Setup(string DBLocation = null, List<string> commands = null)
+        public DataService Setup(string DBLocation = null, List<string> commands = null)
         {
             DBLocation = string.IsNullOrWhiteSpace(DBLocation) ? "cachedb.sqlite".ToCurrentPath() : DBLocation;
             DbLocation = DBLocation;
@@ -41,12 +41,15 @@ namespace MMDHelpers.CSharp.LocalData
                             conn.Close();
                         }
                     }
+                    return this;
                 }
                 catch (Exception ex)
                 {
                     throw;
                 }
             }
+            throw new ArgumentException("check the file path / Connection.");
+
         }
 
         public IEnumerable<T> Query<T>(string query, object param = null, int timeout = 0)
@@ -76,7 +79,6 @@ namespace MMDHelpers.CSharp.LocalData
 
         public int InsertBatch(string query, IEnumerable<Dictionary<string, object>> items, int timeout = 0)
         {
-
             var executed = 0;
 
             if (items.Count() == 0 || items.Sum(c => c.Count) == 0) return 0;
