@@ -10,24 +10,30 @@ namespace MMDHelpers.CSharp.LocalData
 {
     public class DataService
     {
-        private  string connectionstring;
+        private DataService()
+        {
+
+        }
+
+        private string connectionstring;
 
         public string DbLocation { get; private set; }
 
-        public DataService Setup(string DBLocation = null, List<string> commands = null)
+        public static DataService Setup(string DBLocation = null, List<string> commands = null)
         {
+            var dataService = new DataService();
             DBLocation = string.IsNullOrWhiteSpace(DBLocation) ? "cachedb.sqlite".ToCurrentPath() : DBLocation;
-            DbLocation = DBLocation;
-            connectionstring = $"Data Source={DbLocation}; Version=3;";
-            if (!File.Exists(DbLocation))
+            dataService.DbLocation = DBLocation;
+            dataService.connectionstring = $"Data Source={dataService.DbLocation}; Version=3;";
+            if (!File.Exists(dataService.DbLocation))
             {
                 try
                 {
-                    SQLiteConnection.CreateFile(DbLocation);
+                    SQLiteConnection.CreateFile(dataService.DbLocation);
 
                     if (commands != null && commands.Any())
                     {
-                        using (var conn = new SQLiteConnection(connectionstring))
+                        using (var conn = new SQLiteConnection(dataService.connectionstring))
                         using (var cmd = conn.CreateCommand())
                         {
                             conn.Open();
@@ -41,14 +47,23 @@ namespace MMDHelpers.CSharp.LocalData
                             conn.Close();
                         }
                     }
-                    return this;
+                    return dataService;
                 }
                 catch (Exception ex)
                 {
-                    throw;
+                    throw new ArgumentException($"check the file path / Connection. - { ex.Message}");
                 }
             }
-            throw new ArgumentException("check the file path / Connection.");
+            try
+            {
+                dataService.Query<int>("select 1");
+                return dataService;
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException($"check the file path / Connection. - { ex.Message}");
+            }
+
 
         }
 

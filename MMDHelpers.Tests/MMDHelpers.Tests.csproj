@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MMDHelpers.CSharp.LocalData\MMDHelpers.CSharp.LocalData.csproj" />
     <ProjectReference Include="..\MMDHelpers.CSharp\MMDHelpers.CSharp.csproj" />
   </ItemGroup>
 
