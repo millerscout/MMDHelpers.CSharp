@@ -24,12 +24,12 @@ namespace MMDHelpers.CSharp
 
         ConcurrentQueue<int> bufferQueue;
         uint maxPerBuffer = 1000;
-        int currentIndexBuffer = 0;
-        int CurrentItemInBufer = 0;
+        public int currentIndexBuffer = 0;
+        public int CurrentItemInBufer = 0;
         object queueSelectLock = new object();
 
         public T[][] bufferedList;
-        private (int currentIndexBuffer, int CurrentItemInBufer) SelectBufferReturnsIndexItem()
+        public (int currentIndexBuffer, int CurrentItemInBufer) SelectBufferReturnsIndexItem()
         {
             bool retry = false;
             lock (queueSelectLock)
