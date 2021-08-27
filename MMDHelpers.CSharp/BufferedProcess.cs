@@ -25,13 +25,16 @@ namespace MMDHelpers.CSharp
         ConcurrentQueue<int> bufferQueue;
         uint maxPerBuffer = 1000;
         public int currentIndexBuffer = 0;
-        public int CurrentItemInBufer = 0;
+        public int CurrentItemInBufer = -1;
         object queueSelectLock = new object();
 
         public T[][] bufferedList;
+        /// <summary>
+        /// The return value should be completely used before 
+        /// </summary>
+        /// <returns></returns>
         public (int currentIndexBuffer, int CurrentItemInBufer) SelectBufferReturnsIndexItem()
         {
-            bool retry = false;
             lock (queueSelectLock)
             {
                 if (CurrentItemInBufer == maxPerBuffer)
@@ -48,18 +51,15 @@ namespace MMDHelpers.CSharp
                     }
                     return (currentIndexBuffer, CurrentItemInBufer);
                 }
-                if (!retry)
+
+                if (bufferedList[currentIndexBuffer] == null)
                 {
-                    if (bufferedList[currentIndexBuffer] == null)
-                    {
-                        bufferedList[currentIndexBuffer] = new T[maxPerBuffer];
-                    }
-                    (int, int) result = (currentIndexBuffer, CurrentItemInBufer);
-                    CurrentItemInBufer++;
-                    return result;
+                    bufferedList[currentIndexBuffer] = new T[maxPerBuffer];
                 }
+                (int, int) result = (currentIndexBuffer, CurrentItemInBufer);
+                CurrentItemInBufer++;
+                return result;
             }
-            return SelectBufferReturnsIndexItem();
         }
     }
 }
