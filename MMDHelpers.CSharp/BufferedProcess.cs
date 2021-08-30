@@ -37,7 +37,7 @@ namespace MMDHelpers.CSharp
         {
             lock (queueSelectLock)
             {
-                if (CurrentItemInBufer == maxPerBuffer)
+                if (CurrentItemInBufer == maxPerBuffer-1)
                 {
                     onBufferReached(currentIndexBuffer);
                     if (bufferQueue.TryDequeue(out var item))
