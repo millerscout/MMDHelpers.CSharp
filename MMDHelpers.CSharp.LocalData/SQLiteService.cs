@@ -91,7 +91,6 @@ namespace MMDHelpers.CSharp.LocalData
                 return con.Execute(query, param) == 1;
             }
         }
-
         public int InsertBatch(string query, IEnumerable<Dictionary<string, object>> items, int timeout = 0)
         {
             var executed = 0;
