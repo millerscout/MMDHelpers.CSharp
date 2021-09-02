@@ -6,10 +6,10 @@ Some of the code are production ready, and some are just experimentations
 
 ## Projects and purpose
 
-- [Nuget] MMDHelpers.CSharp - simple helpers, you should avoid those if your application need to be high performance GC is not verified.
+- [Nuget] MMDHelpers.CSharp - simple helpers, you should avoid them if your application needs to be high performance.
 - [Nuget] MMDHelpers.CSharp.LDAP - simple abstraction to login on a LDAP service.
 - [Nuget] MMDHelpers.CSharp.LocalData - generates a localDB, uses dapper as micro-orm.
-- [Nuget] MMDHelpers.CSharp.Performance.Grpc - An example to use Grpc to measure Performance (not ideally, but just enough to get the evident ones)
+- [Nuget] MMDHelpers.CSharp.Performance.Grpc - An example to use Grpc to measure Performance (not ideal, but just enough to get the evident ones)
 - MMDHelpers.CSharp.Performance.GrpcClient - A client to control the server.
 - [Nuget] MMDHelpers.CSharp.PerformanceChecks - Just shows the GC Collection and workingSet being used.
 
@@ -81,7 +81,7 @@ there i'm collecting Articles, tools to those scenarios.
 I've written this code to experiment how Grpc works, 
 
 
-```
+``` CSharp
 	//Configuring on DependencyInjection:
 	public void ConfigureServices(IServiceCollection services)
             {
@@ -106,4 +106,46 @@ I've written this code to experiment how Grpc works,
 simple console that sends instructions to server, it'll 
 start, stop measurement, get log and write to file.
 
+## MMDHelpers.CSharp.Performance.BufferedProcess
+
+Across some projects i had to bufferize a collection, that way i would use the same objects over and over again, without needing to allocate more memory.
+
+
+
+``` CSharp
+	
+	// My Latest Context i've connected to a Queue and the messages were indexed or ignored .
+	// the ones that were indexed i had to process and insert into a database.
+	// this code should be enough to give you the head-start
+	
+	
+	
+	
+	//start code
+	/// how many items inside a collection.
+	var  perBuffer = 1000;
+	/// how many collections will be created
+	var collections = 2;
+	var bF = new BufferedProcess<someclass>(Convert.ToUInt32(perBuffer), collections);
+
+	/// when maximum items are filled this event will be raised.
+	bF.onBufferReached += BF_onBufferReached;
+	
+	
+	/// code while reading a source
+	bF.SelectBufferReturnsIndexItem();
+
+	if (bF.bufferedList[bF.currentIndexBuffer][bF.CurrentItemInBufer]== null)
+		bF.bufferedList[bF.currentIndexBuffer][bF.CurrentItemInBufer] = new someclass(){someValue = 0 }
+	}else{
+		bF.bufferedList[bF.currentIndexBuffer][bF.CurrentItemInBufer].someValue = 0;
+	}
+	
+	///
+	
+	
+	public class someclass(){
+		public int someValue {get;set;}
+	}
+```
 
