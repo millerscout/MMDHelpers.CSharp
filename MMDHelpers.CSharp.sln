@@ -19,6 +19,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Benchmark", "Benchmark\Benc
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MMDHelpers.Tests", "MMDHelpers.Tests\MMDHelpers.Tests.csproj", "{3BF6A5A7-1790-48A3-AC98-B08C53DE5CBA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MMDHelpers.CSharp.DependencyInjection.Serilog", "MMDHelpers.CSharp.DependencyExtension\MMDHelpers.CSharp.DependencyInjection.Serilog.csproj", "{DB501A78-7F57-42D6-9EEC-1F723FDBC467}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestConsoles", "TestConsoles", "{7CC696AC-CC46-4D1F-BF16-389DC504DAC8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceOrchestration", "ServiceOrchestration\ServiceOrchestration.csproj", "{233A2EF8-1478-4CB8-9203-FDAD02C506BC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,9 +63,20 @@ Global
 		{3BF6A5A7-1790-48A3-AC98-B08C53DE5CBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3BF6A5A7-1790-48A3-AC98-B08C53DE5CBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3BF6A5A7-1790-48A3-AC98-B08C53DE5CBA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB501A78-7F57-42D6-9EEC-1F723FDBC467}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB501A78-7F57-42D6-9EEC-1F723FDBC467}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB501A78-7F57-42D6-9EEC-1F723FDBC467}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB501A78-7F57-42D6-9EEC-1F723FDBC467}.Release|Any CPU.Build.0 = Release|Any CPU
+		{233A2EF8-1478-4CB8-9203-FDAD02C506BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{233A2EF8-1478-4CB8-9203-FDAD02C506BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{233A2EF8-1478-4CB8-9203-FDAD02C506BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{233A2EF8-1478-4CB8-9203-FDAD02C506BC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{233A2EF8-1478-4CB8-9203-FDAD02C506BC} = {7CC696AC-CC46-4D1F-BF16-389DC504DAC8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5D5AAA89-CB79-44D5-8859-1286D348C4BE}
