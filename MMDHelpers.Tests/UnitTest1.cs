@@ -2,6 +2,7 @@ using NUnit.Framework;
 using MMDHelpers.CSharp.Extensions;
 using MMDHelpers.CSharp;
 using System;
+using System.Threading.Tasks;
 
 namespace MMDHelpers.Test
 {
@@ -20,25 +21,33 @@ namespace MMDHelpers.Test
         public void BufferedTet()
         {
             var maxQty = 200;
-            var perBuffer = 10;
-            var bF = new BufferedProcess<object>(Convert.ToUInt32(perBuffer), 2);
+            var perBuffer = 2;
+            var bF = new BufferedProcess<object>(Convert.ToUInt32(perBuffer), 3);
 
             bF.onBufferReached += BF_onBufferReached;
 
-            for (int i = 0; i < maxQty; i++)
-            {
-                bF.SelectBufferReturnsIndexItem();
 
-                bF.bufferedList[bF.currentIndexBuffer][bF.CurrentItemInBufer] = i;
+            var task = Task.Run(() =>
+            {
+                for (int i = 0; i < maxQty; i++)
+                {
+                    bF.SelectBufferReturnsIndexItem();
+
+                    bF.bufferedList[bF.currentIndexBuffer][bF.CurrentItemInBufer] = i;
+                }
+                bF.SelectBufferReturnsIndexItem();
+            });
+
+            void BF_onBufferReached(int bufferIndex)
+            {
+                calls++;
+                bF.CompleteBuffer(bufferIndex);
             }
-            bF.SelectBufferReturnsIndexItem();
+            task.Wait();
             Assert.AreEqual(calls, maxQty / perBuffer);
 
         }
         public int calls = 0;
-        private void BF_onBufferReached(int bufferIndex)
-        {
-            calls++;
-        }
+
     }
 }

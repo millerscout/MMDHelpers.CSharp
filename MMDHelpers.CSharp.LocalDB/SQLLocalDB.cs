@@ -24,7 +24,7 @@ namespace MMDHelpers.CSharp.LocalDB
 
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder(instance);
 
-            var stringConexao = string.Format($@"Server={builder.DataSource}; Integrated Security={builder.IntegratedSecurity}; AttachDbFileName={0};", caminhoBanco);
+            var sttConn = $"Server={builder.DataSource}; Integrated Security={builder.IntegratedSecurity}; AttachDbFileName={caminhoBanco};";
 
             if (created)
             {
@@ -61,13 +61,13 @@ namespace MMDHelpers.CSharp.LocalDB
             }
             if (created)
             {
-                using (var con = new SqlConnection(stringConexao))
+                using (var con = new SqlConnection(sttConn))
                 {
                     con.Execute(SqlWhenCreating);
                 }
             }
 
-            return stringConexao;
+            return sttConn;
         }
     }
 }

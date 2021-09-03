@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MMDHelpers.CSharp.DependencyExtension\MMDHelpers.CSharp.DependencyInjection.Serilog.csproj" />
+    <ProjectReference Include="..\MMDHelpers.CSharp.LocalDB\MMDHelpers.CSharp.LocalDB.csproj" />
   </ItemGroup>
 
 </Project>

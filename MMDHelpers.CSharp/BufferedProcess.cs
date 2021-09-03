@@ -2,6 +2,8 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace MMDHelpers.CSharp
 {
@@ -12,15 +14,26 @@ namespace MMDHelpers.CSharp
             if (MaxCollectionBuffer < 2) MaxCollectionBuffer = 2;
 
             bufferQueue = new ConcurrentQueue<int>(new List<int>(Convert.ToInt32(MaxCollectionBuffer)));
+
+            
             for (int i = 1; i < MaxCollectionBuffer; i++)
                 bufferQueue.Enqueue(i);
 
             maxPerBuffer = MaxItemPerBuffer;
             bufferedList = new T[MaxCollectionBuffer][];
+
+            this.OnBufferCompleted += BufferedProcess_onBufferCompleted;
+        }
+
+        private void BufferedProcess_onBufferCompleted(object sender, int bufferIndex)
+        {
+            bufferQueue.Enqueue(bufferIndex);
         }
 
         public delegate void OnBufferReached(int bufferIndex);
         public event OnBufferReached onBufferReached;
+
+        public event EventHandler<int> OnBufferCompleted;
 
         ConcurrentQueue<int> bufferQueue;
         uint maxPerBuffer = 1000;
@@ -37,19 +50,30 @@ namespace MMDHelpers.CSharp
         {
             lock (queueSelectLock)
             {
-                if (CurrentItemInBufer == maxPerBuffer-1)
+                if (CurrentItemInBufer == maxPerBuffer - 1)
                 {
                     onBufferReached(currentIndexBuffer);
-                    if (bufferQueue.TryDequeue(out var item))
+
+                    var done = false;
+                    while (!done)
                     {
-                        currentIndexBuffer = item;
+                        if (bufferQueue.TryDequeue(out var item))
+                        {
+                            currentIndexBuffer = item;
+
+                            CurrentItemInBufer = 0;
+                            if (bufferedList[item] == null)
+                            {
+                                bufferedList[item] = new T[maxPerBuffer];
+                            }
+
+                            return (currentIndexBuffer, CurrentItemInBufer);
+                        }
+                        else
+                        {
+                            Task.Delay(Convert.ToInt32(TimeSpan.FromSeconds(1).TotalMilliseconds));
+                        }
                     }
-                    CurrentItemInBufer = 0;
-                    if (bufferedList[item] == null)
-                    {
-                        bufferedList[item] = new T[maxPerBuffer];
-                    }
-                    return (currentIndexBuffer, CurrentItemInBufer);
                 }
 
                 if (bufferedList[currentIndexBuffer] == null)
@@ -60,6 +84,11 @@ namespace MMDHelpers.CSharp
                 CurrentItemInBufer++;
                 return result;
             }
+        }
+
+        public void CompleteBuffer(int bufferIndex)
+        {
+            OnBufferCompleted?.Invoke(this, bufferIndex);
         }
     }
 }
