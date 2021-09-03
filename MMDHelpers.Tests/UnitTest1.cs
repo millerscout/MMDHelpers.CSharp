@@ -18,7 +18,7 @@ namespace MMDHelpers.Test
         }
 
         [TestCase]
-        public void BufferedTet()
+        public void BufferedTest()
         {
             var maxQty = 200;
             var perBuffer = 2;
@@ -31,9 +31,9 @@ namespace MMDHelpers.Test
             {
                 for (int i = 0; i < maxQty; i++)
                 {
-                    bF.SelectBufferReturnsIndexItem();
+                    var bufferTag= bF.SelectBufferReturnsIndexItem();
 
-                    bF.bufferedList[bF.currentIndexBuffer][bF.CurrentItemInBufer] = i;
+                    bF.bufferedList[bufferTag.currentIndexBuffer][bufferTag.CurrentItemInBufer] = i;
                 }
                 bF.SelectBufferReturnsIndexItem();
             });

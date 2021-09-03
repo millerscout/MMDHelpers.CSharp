@@ -37,8 +37,8 @@ namespace MMDHelpers.CSharp
 
         ConcurrentQueue<int> bufferQueue;
         uint maxPerBuffer = 1000;
-        public int currentIndexBuffer = 0;
-        public int CurrentItemInBufer = -1;
+        private int currentIndexBuffer = 0;
+        private int CurrentItemInBufer = -1;
         object queueSelectLock = new object();
 
         public T[][] bufferedList;
