@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace MMDHelpers.CSharp
 {
-    public class BufferedProcess<T> where T : class
+    public class BufferedProcess<T> where T : class, new()
     {
         public BufferedProcess(uint MaxItemPerBuffer, uint MaxCollectionBuffer)
         {
@@ -15,7 +16,7 @@ namespace MMDHelpers.CSharp
 
             bufferQueue = new ConcurrentQueue<int>(new List<int>(Convert.ToInt32(MaxCollectionBuffer)));
 
-            
+
             for (int i = 1; i < MaxCollectionBuffer; i++)
                 bufferQueue.Enqueue(i);
 
@@ -33,24 +34,26 @@ namespace MMDHelpers.CSharp
         public delegate void OnBufferReached(int bufferIndex);
         public event OnBufferReached onBufferReached;
 
-        public event EventHandler<int> OnBufferCompleted;
+        private event EventHandler<int> OnBufferCompleted;
 
         ConcurrentQueue<int> bufferQueue;
         uint maxPerBuffer = 1000;
         private int currentIndexBuffer = 0;
-        private int CurrentItemInBufer = -1;
+        private int CurrentItemInBuffer = 0;
         object queueSelectLock = new object();
 
-        public T[][] bufferedList;
+        private T[][] bufferedList;
+
+
         /// <summary>
-        /// The return value should be completely used before 
+        /// The returns the position of the buffer.
         /// </summary>
         /// <returns></returns>
-        public (int currentIndexBuffer, int CurrentItemInBufer) SelectBufferReturnsIndexItem()
+        private (int currentIndexBuffer, int CurrentItemInBuffer) NextPosition()
         {
             lock (queueSelectLock)
             {
-                if (CurrentItemInBufer == maxPerBuffer - 1)
+                if (CurrentItemInBuffer == maxPerBuffer - 1)
                 {
                     onBufferReached(currentIndexBuffer);
 
@@ -61,17 +64,17 @@ namespace MMDHelpers.CSharp
                         {
                             currentIndexBuffer = item;
 
-                            CurrentItemInBufer = 0;
+                            CurrentItemInBuffer = 0;
                             if (bufferedList[item] == null)
                             {
                                 bufferedList[item] = new T[maxPerBuffer];
                             }
 
-                            return (currentIndexBuffer, CurrentItemInBufer);
+                            return (currentIndexBuffer, CurrentItemInBuffer);
                         }
                         else
                         {
-                            Task.Delay(Convert.ToInt32(TimeSpan.FromSeconds(1).TotalMilliseconds));
+                            Task.Delay(Convert.ToInt32(TimeSpan.FromSeconds(1).TotalMilliseconds)).Wait();
                         }
                     }
                 }
@@ -80,9 +83,40 @@ namespace MMDHelpers.CSharp
                 {
                     bufferedList[currentIndexBuffer] = new T[maxPerBuffer];
                 }
-                (int, int) result = (currentIndexBuffer, CurrentItemInBufer);
-                CurrentItemInBufer++;
+                (int, int) result = (currentIndexBuffer, CurrentItemInBuffer);
+                CurrentItemInBuffer++;
                 return result;
+            }
+        }
+        public ref T Next()
+        {
+            var t = NextPosition();
+            if (bufferedList[t.currentIndexBuffer][t.CurrentItemInBuffer] == null)
+            {
+                bufferedList[t.currentIndexBuffer][t.CurrentItemInBuffer] = new T();
+            }
+            return ref bufferedList[t.currentIndexBuffer][t.CurrentItemInBuffer];
+        }
+        public IEnumerable<T> GetRemainingItemsInBuffer()
+        {
+            var bufferTag = GetLatestBufferIndexItem();
+            return bufferedList[bufferTag.currentIndexBuffer].Take(bufferTag.CurrentItemInBufer - 1);
+        }
+        public ref T[] GetCollectionInBuffer(int BufferIndex)
+        {
+            return ref bufferedList[BufferIndex];
+        }
+
+
+        /// <summary>
+        /// The returns the position of the buffer without changing.
+        /// </summary>
+        /// <returns></returns>
+        public (int currentIndexBuffer, int CurrentItemInBufer) GetLatestBufferIndexItem()
+        {
+            lock (queueSelectLock)
+            {
+                return (currentIndexBuffer, CurrentItemInBuffer);
             }
         }
 

@@ -14,6 +14,12 @@ namespace ServiceOrchestration
     {
         static void Main(string[] args)
         {
+
+            var teste = MMDHelpers.CSharp.LocalDB.SQLLocalDB.CreateInstance("LogLarvaErrors", "teste",
+                $@"create table controller (id integer identity(1,1),last integer,name varchar(500));
+create table ExceptionDetails (Id integer identity(1,1), IdLog int, File int, Type int, Method int, Line int, StackOrder int);");
+
+
             Log.Logger = new LoggerConfiguration()
            .MinimumLevel.Information()
            .WriteTo.MMDSink()

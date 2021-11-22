@@ -31,11 +31,10 @@ namespace MMDHelpers.Test
             {
                 for (int i = 0; i < maxQty; i++)
                 {
-                    var bufferTag= bF.SelectBufferReturnsIndexItem();
-
-                    bF.bufferedList[bufferTag.currentIndexBuffer][bufferTag.CurrentItemInBufer] = i;
+                    var item = bF.Next();
+                    item = i;
                 }
-                bF.SelectBufferReturnsIndexItem();
+                bF.Next();
             });
 
             void BF_onBufferReached(int bufferIndex)
@@ -47,6 +46,12 @@ namespace MMDHelpers.Test
             Assert.AreEqual(calls, maxQty / perBuffer);
 
         }
+        public class sample
+        {
+            public int a { get; set; }
+            public string b { get; set; }
+        }
+
         public int calls = 0;
 
     }
