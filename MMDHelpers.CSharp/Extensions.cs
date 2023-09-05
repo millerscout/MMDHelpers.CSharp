@@ -5,7 +5,7 @@ using System.Data;
 using System.IO;
 using System.Reflection;
 
-namespace MMDHelpers.CSharp.Extensions
+namespace System
 {
     public static class Extensions
     {
@@ -72,12 +72,12 @@ namespace MMDHelpers.CSharp.Extensions
         /// </summary>
         /// <param name="dateTime"></param>
         /// <returns></returns>
-        public static double GetUnixEpoch(this DateTime dateTime)
+        public static int GetUnixEpoch(this DateTime dateTime)
         {
             var unixTime = dateTime.ToUniversalTime() -
                 new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
-            return unixTime.TotalSeconds;
+            return (int)unixTime.TotalSeconds;
         }
     }
 }
